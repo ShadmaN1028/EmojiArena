@@ -1,0 +1,27 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+/.idea/deploymentTargetSelector.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+.kotlin
+local.properties
+
+# Signing / secrets - never commit these
+*.jks
+*.keystore
+*.p12
+google-services.json
+
+# OS / editor cruft
+Thumbs.db
+*.swp

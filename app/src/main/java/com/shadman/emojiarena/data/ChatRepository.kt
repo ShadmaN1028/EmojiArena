@@ -77,9 +77,10 @@ object ChatRepository {
 
     /**
      * Posts the user's own score card into [contactId]'s thread — same
-     * delivery-tick pipeline as [sendMessage] — then schedules that
-     * contact's counter-card. Reused for both the "Send score" action
-     * (one contact, the thread the game was launched from) and "Challenge
+     * delivery-tick pipeline as [sendMessage] — then, only if this contact
+     * is one who replies to challenges (see ScoreChallengeEngine), schedules
+     * their counter-card. Reused for both the "Send score" action (one
+     * contact, the thread the game was launched from) and "Challenge
      * others" (called once per selected contact), which is why this takes
      * a plain contactId rather than assuming "the current thread".
      */
@@ -96,6 +97,7 @@ object ChatRepository {
         )
         appendMessage(contactId, message)
         advanceStatus(contactId, message.id)
+        if (!ScoreChallengeEngine.respondsToChallenge(contactId)) return
         ScoreChallengeEngine.scheduleCounterChallenge(
             scope = repositoryScope,
             userScore = score,

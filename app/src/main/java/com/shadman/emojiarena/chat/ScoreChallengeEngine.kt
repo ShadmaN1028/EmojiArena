@@ -12,8 +12,22 @@ import kotlinx.coroutines.launch
  * shape, just producing a beaten score instead of a line of dialogue.
  * Always beats the user's score by a small margin, never ties or blows it
  * out, so it reads as "close enough to be a real reply."
+ *
+ * Not every contact replies to a challenge. A real group of people
+ * wouldn't all fire back the instant they're sent something, and a demo
+ * where four contacts each answer within two seconds reads as fake. The
+ * ones left out of [respondingContactIds] still receive the card and its
+ * delivery ticks completely normally — they just never send anything
+ * back, so "sent" stays visible instead of being instantly buried under a
+ * reply.
  */
 object ScoreChallengeEngine {
+
+    // Ayesha Rahman, Meherun Nesa, Sabbir Ahmed reply.
+    // Tanvir Chowdhury, Farhan Kabir, Nusrat Jahan, Rafiul Islam, Priya Das don't.
+    private val respondingContactIds = setOf("1", "6", "7")
+
+    fun respondsToChallenge(contactId: String): Boolean = contactId in respondingContactIds
 
     fun scheduleCounterChallenge(
         scope: CoroutineScope,
